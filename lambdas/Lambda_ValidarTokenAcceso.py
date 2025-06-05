@@ -18,7 +18,7 @@ def lambda_handler(event, context):
 
         # Consultar DynamoDB
         dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('t_tokens_acceso')
+        table = dynamodb.Table('t_MS1_tokens_acceso')
         response = table.get_item(Key={'token': token})
 
         print("Respuesta de DynamoDB:", response)
