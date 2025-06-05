@@ -1,5 +1,5 @@
 org: ivanrodriguezperez
-service: api-usuarios
+service: MS1-api-usuarios
 
 provider:
   name: aws
