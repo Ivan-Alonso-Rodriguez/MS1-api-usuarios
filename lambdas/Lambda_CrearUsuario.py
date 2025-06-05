@@ -21,7 +21,7 @@ def lambda_handler(event, context):
         hashed_password = hash_password(password)
 
         dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('t_usuarios')
+        table = dynamodb.Table('t_MS1_usuarios')
 
         item = {
             'user_id': user_id,
