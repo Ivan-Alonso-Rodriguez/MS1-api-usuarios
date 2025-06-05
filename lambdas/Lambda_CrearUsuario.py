@@ -1,5 +1,6 @@
 import boto3
 import hashlib
+import json
 
 # Hashear contraseña
 def hash_password(password):
