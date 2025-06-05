@@ -10,7 +10,7 @@ def lambda_handler(event, context):
         body = json.loads(event['body'])
         user_id = body.get('user_id')
         password = body.get('password')
-        nombre = body.get('nombre')
+        name = body.get('name')
 
         if not user_id or not password:
             return {
@@ -28,8 +28,8 @@ def lambda_handler(event, context):
             'password': hashed_password
         }
 
-        if nombre:
-            item['nombre'] = nombre
+        if name:
+            item['name'] = name
 
         table.put_item(Item=item)
 
