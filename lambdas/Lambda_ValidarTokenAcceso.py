@@ -1,6 +1,7 @@
 import boto3
 from datetime import datetime
 import json
+import os  # para leer variables de entorno
 
 def lambda_handler(event, context):
     try:
@@ -18,7 +19,8 @@ def lambda_handler(event, context):
 
         # Consultar DynamoDB
         dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('t_MS1_tokens_acceso')
+        tokens_table_name = os.environ['TOKENS_TABLE']
+        table = dynamodb.Table(tokens_table_name)
         response = table.get_item(Key={'token': token})
 
         print("Respuesta de DynamoDB:", response)
