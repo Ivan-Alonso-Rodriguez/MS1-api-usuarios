@@ -8,11 +8,10 @@ provider:
   timeout: 30
   environment:
     JWT_SECRET: clave_de_prueba
-  iam:
-    role: arn:aws:iam::748213590633:role/LabRole
-  environment:
     TABLE_NAME: ${sls:stage}-t_MS1_usuarios
     TOKENS_TABLE: ${sls:stage}-t_MS1_tokens_acceso
+  iam:
+    role: arn:aws:iam::748213590633:role/LabRole
 
 functions:
   crearUsuario:
