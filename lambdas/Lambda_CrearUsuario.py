@@ -1,6 +1,7 @@
 import boto3
 import hashlib
 import json
+import os  # para acceder a variables de entorno
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -20,8 +21,10 @@ def lambda_handler(event, context):
 
         hashed_password = hash_password(password)
 
+        # Obtener el nombre de la tabla desde la variable de entorno
+        table_name = os.environ['TABLE_NAME']
         dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('t_MS1_usuarios')
+        table = dynamodb.Table(table_name)
 
         item = {
             'user_id': user_id,
