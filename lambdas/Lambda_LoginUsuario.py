@@ -50,7 +50,7 @@ def lambda_handler(event, context):
         table_tokens.put_item(Item={
             'token': token,
             'expires': fecha_hora_exp.strftime('%Y-%m-%d %H:%M:%S'),
-            'tenant_id': response['Item']['tenant_id']
+            'user_id': user_id
         })
 
         return {
