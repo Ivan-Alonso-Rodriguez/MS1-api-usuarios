@@ -3,6 +3,7 @@ import hashlib
 import uuid
 from datetime import datetime, timedelta
 import json
+import os  # para leer variables de entorno
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -26,7 +27,10 @@ def lambda_handler(event, context):
         hashed_password = hash_password(password)
 
         dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('t_MS1_usuarios')
+
+        # Leer nombre de tabla de usuarios desde variable de entorno
+        table_name = os.environ['TABLE_NAME']
+        table = dynamodb.Table(table_name)
         response = table.get_item(Key={ 'user_id': user_id })
         print("Respuesta DynamoDB:", response)
 
@@ -46,7 +50,9 @@ def lambda_handler(event, context):
         token = str(uuid.uuid4())
         fecha_hora_exp = datetime.now() + timedelta(minutes=60)
 
-        table_tokens = dynamodb.Table('t_MS1_tokens_acceso')
+        # Leer nombre de tabla de tokens desde variable de entorno
+        tokens_table_name = os.environ['TOKENS_TABLE']
+        table_tokens = dynamodb.Table(tokens_table_name)
         table_tokens.put_item(Item={
             'token': token,
             'expires': fecha_hora_exp.strftime('%Y-%m-%d %H:%M:%S'),
