@@ -1,8 +1,9 @@
 openapi: 3.0.0
 info:
   title: API Usuarios - Proyecto Final
-  description: API para gestionar usuarios, login y validación de acceso usando DynamoDB.
-  version: "1.0.0"
+  version: 1.0.0
+  description: API para gestionar usuarios, login y validación de acceso usando AWS Lambda y DynamoDB
+
 paths:
   /usuarios/crear:
     post:
@@ -13,14 +14,19 @@ paths:
           application/json:
             schema:
               type: object
+              required: [user_id, password]
               properties:
                 user_id:
                   type: string
                 password:
                   type: string
+                name:
+                  type: string
       responses:
         '200':
           description: Usuario creado exitosamente
+        '400':
+          description: Datos inválidos
 
   /usuarios/login:
     post:
@@ -31,6 +37,7 @@ paths:
           application/json:
             schema:
               type: object
+              required: [user_id, password]
               properties:
                 user_id:
                   type: string
@@ -39,6 +46,8 @@ paths:
       responses:
         '200':
           description: Token generado exitosamente
+        '401':
+          description: Credenciales incorrectas
 
   /usuarios/validar:
     post:
@@ -49,9 +58,12 @@ paths:
           application/json:
             schema:
               type: object
+              required: [token]
               properties:
                 token:
                   type: string
       responses:
         '200':
           description: Token válido
+        '401':
+          description: Token inválido
