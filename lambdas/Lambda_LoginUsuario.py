@@ -49,7 +49,8 @@ def lambda_handler(event, context):
         table_tokens = dynamodb.Table('t_MS1_tokens_acceso')
         table_tokens.put_item(Item={
             'token': token,
-            'expires': fecha_hora_exp.strftime('%Y-%m-%d %H:%M:%S')
+            'expires': fecha_hora_exp.strftime('%Y-%m-%d %H:%M:%S'),
+            'tenant_id': response['Item']['tenant_id']
         })
 
         return {
