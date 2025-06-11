@@ -10,6 +10,8 @@ provider:
     JWT_SECRET: clave_de_prueba
   iam:
     role: arn:aws:iam::748213590633:role/LabRole
+  environment:
+    TABLE_NAME: ${sls:stage}-t_MS1_usuarios
 
 functions:
   crearUsuario:
@@ -41,7 +43,7 @@ resources:
     UsuariosTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: t_MS1_usuarios
+        TableName: ${self:provider.environment.TABLE_NAME}
         AttributeDefinitions:
           - AttributeName: user_id
             AttributeType: S
@@ -53,7 +55,7 @@ resources:
     TokensTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: t_MS1_tokens_acceso
+        TableName: ${sls:stage}-t_MS1_tokens_acceso
         AttributeDefinitions:
           - AttributeName: token
             AttributeType: S
